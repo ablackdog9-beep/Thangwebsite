@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thang Ngoc Tran — Phage Receptors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: wide illustrated hero, then alternating full-bleed figure bands and a narrow reading column. */
+:root{
+  --ink:#1b1d24;
+  --ink-soft:#5a6069;
+  --paper:#f2f1ec;
+  --surface:#fbfaf7;
+  --line:#dbd8d0;
+  --accent:#26476b;
+  --accent-soft:#dde5ee;
+  --amber:#a5681a;
+  --amber-soft:#f0e3cf;
+  --display:"Archivo",Helvetica,Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ink:#eceade;
+    --ink-soft:#9aa2ad;
+    --paper:#14161b;
+    --surface:#1c1f26;
+    --line:#2f343d;
+    --accent:#7fb0e0;
+    --accent-soft:#1d2a38;
+    --amber:#e0a95f;
+    --amber-soft:#332a1c;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#eceade;
+  --ink-soft:#9aa2ad;
+  --paper:#14161b;
+  --surface:#1c1f26;
+  --line:#2f343d;
+  --accent:#7fb0e0;
+  --accent-soft:#1d2a38;
+  --amber:#e0a95f;
+  --amber-soft:#332a1c;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.65;
+}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+svg{display:block;max-width:100%;height:auto}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.col{max-width:34em}
+
+/* ---- top bar ---- */
+.bar{
+  position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+}
+.bar .wrap{display:flex;align-items:center;gap:20px;height:56px;justify-content:space-between}
+.sig{font-family:var(--display);font-weight:700;font-size:.95rem;letter-spacing:.02em;border:0}
+.sig:hover{border:0}
+.bar nav{display:flex;gap:18px;flex-wrap:wrap}
+.bar nav a{
+  border:0;font-family:var(--display);font-size:.76rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+.bar nav a:hover{color:var(--accent)}
+.theme{
+  background:none;border:1px solid var(--line);color:var(--ink-soft);cursor:pointer;
+  font-family:var(--display);font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 11px;border-radius:999px;flex:none;
+}
+.theme:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ---- hero ---- */
+.hero{padding:64px 0 56px;border-bottom:1px solid var(--line)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:48px;align-items:center}
+.eyebrow{
+  font-family:var(--display);font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);margin:0 0 14px;
+}
+h1{
+  font-family:var(--display);font-weight:700;font-size:clamp(2.1rem,5vw,3.1rem);line-height:1.04;
+  letter-spacing:-.02em;margin:0 0 6px;text-wrap:balance;
+}
+.hero .sub{font-family:var(--display);font-weight:500;font-size:1rem;color:var(--ink-soft);margin:0 0 22px}
+.hero p.statement{font-size:1.15rem;margin:0 0 24px;max-width:30em}
+.hero p.statement em{font-style:italic}
+.quick{display:flex;flex-wrap:wrap;gap:10px 18px;font-family:var(--display);font-size:.82rem;color:var(--ink-soft)}
+.quick a{border-bottom-color:transparent}
+figcaption{
+  font-family:var(--display);font-size:.74rem;letter-spacing:.06em;color:var(--ink-soft);
+  margin-top:10px;line-height:1.5;
+}
+figcaption b{color:var(--ink);font-weight:600}
+
+/* ---- sections ---- */
+section{padding:64px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+h2{
+  font-family:var(--display);font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-soft);margin:0 0 24px;
+}
+h3{font-family:var(--display);font-size:1.3rem;font-weight:600;line-height:1.2;margin:0 0 10px;letter-spacing:-.01em;text-wrap:balance}
+p{margin:0 0 16px}
+p:last-child{margin-bottom:0}
+.muted{color:var(--ink-soft)}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:start}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px 24px}
+.card h4{font-family:var(--display);font-size:1rem;font-weight:600;margin:0 0 6px;display:flex;align-items:center;gap:9px}
+.card p{font-size:.95rem;color:var(--ink-soft);margin:0}
+.num{
+  font-family:var(--mono);font-size:.7rem;color:var(--accent);background:var(--accent-soft);
+  border-radius:4px;padding:2px 6px;flex:none;
+}
+
+/* toolkit */
+.tool{display:grid;grid-template-columns:116px minmax(0,1fr);gap:18px;align-items:center;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.tool h4{font-family:var(--display);font-size:1rem;font-weight:600;margin:0 0 4px}
+.tool p{font-size:.92rem;color:var(--ink-soft);margin:0}
+.tool .mode{font-family:var(--mono);font-size:.72rem;color:var(--amber);letter-spacing:.04em}
+
+/* skills */
+.skillgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
+.skillgrid h4{
+  font-family:var(--display);font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--amber);margin:0 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line);
+}
+.skillgrid ul{margin:0;padding-left:17px;font-size:.94rem;color:var(--ink-soft)}
+.skillgrid li{margin-bottom:4px}
+.skillgrid li::marker{color:var(--accent)}
+
+/* publications + timeline */
+ol.pubs{list-style:none;counter-reset:p;margin:0;padding:0;max-width:46em}
+ol.pubs li{counter-increment:p;position:relative;padding:0 0 20px 38px;margin-bottom:20px;
+  border-bottom:1px solid var(--line);font-size:.96rem;color:var(--ink-soft)}
+ol.pubs li:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+ol.pubs li::before{content:counter(p);position:absolute;left:0;top:2px;font-family:var(--mono);font-size:.72rem;
+  color:var(--accent);border:1px solid var(--line);border-radius:50%;width:24px;height:24px;display:grid;place-items:center}
+ol.pubs .you{color:var(--ink);font-weight:600}
+ol.pubs .venue{font-style:italic;color:var(--ink)}
+
+.tl{position:relative;padding-left:26px;max-width:44em}
+.tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.tl .item{position:relative;padding-bottom:26px}
+.tl .item:last-child{padding-bottom:0}
+.tl .item::before{content:"";position:absolute;left:-24px;top:8px;width:9px;height:9px;border-radius:50%;
+  background:var(--paper);border:2px solid var(--accent)}
+.tl .when{font-family:var(--mono);font-size:.76rem;color:var(--amber);font-variant-numeric:tabular-nums}
+.tl h4{font-family:var(--display);font-size:1rem;font-weight:600;margin:2px 0 3px}
+.tl p{font-size:.94rem;color:var(--ink-soft);margin:0}
+
+ul.talks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px;max-width:46em}
+ul.talks li{font-size:.94rem;color:var(--ink-soft);padding-left:16px;border-left:2px solid var(--line)}
+ul.talks .kind{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--amber);margin-right:8px}
+ul.talks strong{color:var(--ink);font-weight:600}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin:0}
+.fact{border-left:2px solid var(--accent);padding:2px 0 2px 14px}
+.fact dt{font-family:var(--display);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.fact dd{margin:4px 0 0;font-size:.95rem}
+
+footer{padding:40px 0 56px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:baseline}
+footer .big{font-family:var(--display);font-size:1.5rem;font-weight:600;letter-spacing:-.01em}
+footer .links{display:flex;flex-wrap:wrap;gap:16px;font-family:var(--display);font-size:.88rem}
+
+@media (max-width:880px){
+  .hero{padding:44px 0 40px}
+  .hero .wrap,.two{grid-template-columns:1fr;gap:32px}
+  .bar nav{display:none}
+  section{padding:48px 0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="sig" href="#top">TRAN NGOC THANG</a>
+    <nav aria-label="Sections">
+      <a href="#question">Question</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#assay">Assay</a>
+      <a href="#skills">Skills</a>
+      <a href="#papers">Papers</a>
+      <a href="#path">Path</a>
+    </nav>
+    <button class="theme" id="theme" type="button">Dark</button>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">PhD student · TIGP-CBMB · Academia Sinica &amp; IBS, National Taiwan University</p>
+      <h1>What does a phage hold on to?</h1>
+      <p class="sub">Thang Ngoc Tran — Lowary lab · mycobacteriophage–host interaction &amp; bacterial genetic tools</p>
+      <p class="statement">A mycobacteriophage has to find one molecule on a cell wall that is mostly lipid, mostly impenetrable, and unlike almost any other bacterial surface. I build the genetic tools to delete <strong style="font-weight:600">glycopeptidolipid</strong> biosynthesis genes in <em>Mycobacterium</em>, then ask the phage which deletion it can no longer infect.</p>
+      <div class="quick">
+        <a href="mailto:tnthang97@gmail.com">tnthang97@gmail.com</a>
+        <a href="https://www.linkedin.com/in/tnt97/">LinkedIn</a>
+        <span>Vietnamese · English (IELTS 8.0)</span>
+      </div>
+    </div>
+
+    <figure style="margin:0">
+      <!-- Hero: mycobacterial envelope cross-section with a phage adsorbing to a surface glycan receptor -->
+      <svg viewBox="0 0 440 400" role="img" aria-label="Cross-section of the mycobacterial cell envelope with a phage adsorbing to a surface glycan">
+        <defs>
+          <linearGradient id="myco" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--accent-soft)"/>
+            <stop offset="100%" stop-color="var(--surface)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- envelope bands -->
+        <rect x="0" y="238" width="440" height="34" fill="url(#myco)"/>
+        <rect x="0" y="272" width="440" height="30" fill="var(--surface)"/>
+        <rect x="0" y="302" width="440" height="26" fill="var(--amber-soft)"/>
+        <rect x="0" y="328" width="440" height="24" fill="var(--surface)"/>
+        <g stroke="var(--line)" stroke-width="1">
+          <line x1="0" y1="238" x2="440" y2="238"/>
+          <line x1="0" y1="272" x2="440" y2="272"/>
+          <line x1="0" y1="302" x2="440" y2="302"/>
+          <line x1="0" y1="328" x2="440" y2="328"/>
+          <line x1="0" y1="352" x2="440" y2="352"/>
+        </g>
+
+        <!-- mycolic acid chains -->
+        <g stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" opacity=".55" fill="none">
+          <path d="M18 238v-26M30 238v-26M48 238v-30M60 238v-30M90 238v-26M102 238v-26M122 238v-30M134 238v-30M168 238v-26M180 238v-26M258 238v-30M270 238v-30M292 238v-26M304 238v-26M330 238v-30M342 238v-30M372 238v-26M384 238v-26M404 238v-30M416 238v-30"/>
+        </g>
+
+        <!-- surface glycans (arabinomannan-like antennae) -->
+        <g stroke="var(--amber)" stroke-width="1.8" fill="none" stroke-linecap="round">
+          <path d="M36 212v-22M36 190l-9-9M36 190l9-9"/>
+          <path d="M114 208v-24M114 184l-9-9M114 184l9-9"/>
+          <path d="M348 208v-24M348 184l-9-9M348 184l9-9"/>
+          <path d="M398 212v-22M398 190l-9-9M398 190l9-9"/>
+        </g>
+        <g fill="var(--amber)">
+          <circle cx="27" cy="181" r="4"/><circle cx="45" cy="181" r="4"/>
+          <circle cx="105" cy="175" r="4"/><circle cx="123" cy="175" r="4"/>
+          <circle cx="339" cy="175" r="4"/><circle cx="357" cy="175" r="4"/>
+          <circle cx="389" cy="181" r="4"/><circle cx="407" cy="181" r="4"/>
+        </g>
+
+        <!-- the receptor glycan being gripped -->
+        <g stroke="var(--accent)" stroke-width="2.4" fill="none" stroke-linecap="round">
+          <path d="M220 206v-30"/>
+        </g>
+        <circle cx="220" cy="172" r="7" fill="var(--accent)"/>
+        <circle cx="220" cy="172" r="13" fill="none" stroke="var(--accent)" stroke-width="1" opacity=".45"/>
+
+        <!-- phage -->
+        <g>
+          <!-- capsid: icosahedral outline -->
+          <path d="M220 28l40 23v46l-40 23-40-23V51z" fill="var(--surface)" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M180 51l40 23 40-23M220 74v46" fill="none" stroke="var(--accent)" stroke-width="1" opacity=".45"/>
+          <!-- neck -->
+          <rect x="212" y="120" width="16" height="9" rx="2" fill="var(--accent)"/>
+          <!-- tail -->
+          <rect x="215" y="129" width="10" height="34" rx="3" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+          <g stroke="var(--accent)" stroke-width="1" opacity=".5">
+            <line x1="215" y1="136" x2="225" y2="136"/><line x1="215" y1="143" x2="225" y2="143"/>
+            <line x1="215" y1="150" x2="225" y2="150"/><line x1="215" y1="157" x2="225" y2="157"/>
+          </g>
+          <!-- baseplate -->
+          <path d="M206 163h28v6h-28z" fill="var(--accent)"/>
+          <!-- tail fibres gripping the glycan -->
+          <path d="M208 169c-14 8-20 20-18 34" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M232 169c14 8 20 20 18 34" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+        </g>
+
+        <!-- labels -->
+        <g font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--ink-soft)">
+          <text x="8" y="256">mycolic acids</text>
+          <text x="8" y="290">arabinogalactan</text>
+          <text x="8" y="319">peptidoglycan</text>
+          <text x="8" y="345">plasma membrane</text>
+          <text x="8" y="205" fill="var(--amber)">glycopeptidolipids</text>
+          <text x="248" y="176" fill="var(--accent)">receptor?</text>
+        </g>
+      </svg>
+      <figcaption><b>Figure 1.</b> Adsorption is the first committed step of infection — and the step a resistant mutant usually fails at.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<main>
+
+  <section id="question">
+    <div class="wrap">
+      <h2>The question</h2>
+      <div class="two">
+        <div class="col">
+          <h3>Find the receptor by breaking it</h3>
+          <p>Mycobacteria wrap themselves in a waxy, mycolic-acid outer layer that makes them hard to kill and hard to study. Phages infect them anyway, which means something on that surface is recognisable. Identifying it matters for phage therapy against <em>M. tuberculosis</em> and <em>M. abscessus</em>, and for understanding how the envelope is assembled in the first place.</p>
+          <p class="muted">My candidates are the <strong style="color:var(--ink);font-weight:600">glycopeptidolipids</strong> — the glycosylated lipids decorating the outermost layer of <em>M. smegmatis</em>, positioned exactly where a tail fibre would make first contact.</p>
+          <p class="muted">The approach is reductive: delete a step in the GPL biosynthesis pathway, confirm nothing else about the cell has quietly changed, then measure whether the phage still sticks. A mutant that grows normally but no longer adsorbs points at a receptor. Work comparing wild type with GPL-pathway deletion mutants across adsorption, infection and burst is in preparation.</p>
+        </div>
+
+        <figure style="margin:0">
+          <!-- Two-panel comparison: WT adsorbs, mutant does not -->
+          <svg viewBox="0 0 440 230" role="img" aria-label="Two panels comparing phage adsorption on wild type and a deletion mutant">
+            <!-- panel WT -->
+            <g>
+              <rect x="4" y="4" width="206" height="200" rx="10" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="20" y="30" font-family="Archivo, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">wild type</text>
+              <!-- cell surface -->
+              <rect x="20" y="150" width="174" height="38" rx="5" fill="var(--accent-soft)" stroke="var(--line)"/>
+              <!-- glycans present -->
+              <g stroke="var(--accent)" stroke-width="2" stroke-linecap="round" fill="none">
+                <path d="M46 150v-16M78 150v-16M110 150v-16M142 150v-16M174 150v-16"/>
+              </g>
+              <g fill="var(--accent)">
+                <circle cx="46" cy="130" r="4.5"/><circle cx="78" cy="130" r="4.5"/>
+                <circle cx="110" cy="130" r="4.5"/><circle cx="142" cy="130" r="4.5"/><circle cx="174" cy="130" r="4.5"/>
+              </g>
+              <!-- bound phage -->
+              <g transform="translate(96,72)">
+                <path d="M14 0l16 9v18l-16 9-16-9V9z" fill="var(--surface)" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>
+                <rect x="10" y="36" width="8" height="20" rx="2.5" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.8"/>
+                <path d="M4 56h20v4H4z" fill="var(--accent)"/>
+              </g>
+              <text x="20" y="48" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--ink-soft)">phage binds · infection proceeds</text>
+            </g>
+            <!-- panel mutant -->
+            <g>
+              <rect x="230" y="4" width="206" height="200" rx="10" fill="var(--surface)" stroke="var(--line)"/>
+              <text x="246" y="30" font-family="Archivo, sans-serif" font-size="12" font-weight="600" fill="var(--amber)">GPL pathway deletion</text>
+              <rect x="246" y="150" width="174" height="38" rx="5" fill="var(--amber-soft)" stroke="var(--line)"/>
+              <!-- glycans truncated -->
+              <g stroke="var(--amber)" stroke-width="2" stroke-linecap="round" fill="none" opacity=".8">
+                <path d="M272 150v-5M304 150v-5M336 150v-5M368 150v-5M400 150v-5"/>
+              </g>
+              <!-- phage drifting away -->
+              <g transform="translate(322,62) rotate(22)">
+                <path d="M14 0l16 9v18l-16 9-16-9V9z" fill="var(--surface)" stroke="var(--amber)" stroke-width="2" stroke-linejoin="round"/>
+                <rect x="10" y="36" width="8" height="20" rx="2.5" fill="var(--surface)" stroke="var(--amber)" stroke-width="1.8"/>
+                <path d="M4 56h20v4H4z" fill="var(--amber)"/>
+              </g>
+              <g stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round" opacity=".7">
+                <path d="M286 120l-16 16M270 120l16 16"/>
+              </g>
+              <text x="246" y="48" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--ink-soft)">no adsorption · no infection</text>
+            </g>
+          </svg>
+          <figcaption><b>Figure 2.</b> The screen in one line: if removing a gene removes adsorption, that gene's product is on the path to the receptor.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="toolkit">
+    <div class="wrap">
+      <h2>Genetic toolkit</h2>
+      <div class="col" style="margin-bottom:30px">
+        <h3>Three ways to silence a gene, and when each one earns its place</h3>
+        <p class="muted">Mycobacteria recombine poorly and grow slowly, so the method matters as much as the target. I work across all three Cas9 modes plus classical allelic exchange, and choose by whether the gene is essential, whether a clean scar-free deletion is needed, and how fast an answer has to come.</p>
+      </div>
+
+      <div class="three">
+
+        <div class="tool">
+          <!-- Cas9: blunt double-strand break -->
+          <svg viewBox="0 0 110 90" role="img" aria-label="Cas9 cutting both DNA strands">
+            <g stroke="var(--line)" stroke-width="7" stroke-linecap="round">
+              <line x1="8" y1="34" x2="46" y2="34"/><line x1="64" y1="34" x2="102" y2="34"/>
+              <line x1="8" y1="54" x2="46" y2="54"/><line x1="64" y1="54" x2="102" y2="54"/>
+            </g>
+            <g stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round">
+              <line x1="55" y1="18" x2="55" y2="70"/>
+            </g>
+            <circle cx="55" cy="12" r="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+            <g stroke="var(--amber)" stroke-width="2" stroke-linecap="round">
+              <path d="M48 78l14-14M62 78L48 64"/>
+            </g>
+          </svg>
+          <div>
+            <p class="mode">cuts both strands</p>
+            <h4>Cas9</h4>
+            <p>Full knockouts and HDR knock-ins with a donor template. Fast, but a double-strand break in a slow grower is a blunt instrument.</p>
+          </div>
+        </div>
+
+        <div class="tool">
+          <!-- Cas9 nickase -->
+          <svg viewBox="0 0 110 90" role="img" aria-label="Cas9 nickase cutting one DNA strand only">
+            <g stroke="var(--line)" stroke-width="7" stroke-linecap="round">
+              <line x1="8" y1="34" x2="46" y2="34"/><line x1="64" y1="34" x2="102" y2="34"/>
+              <line x1="8" y1="54" x2="102" y2="54"/>
+            </g>
+            <g stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round">
+              <line x1="55" y1="18" x2="55" y2="40"/>
+            </g>
+            <circle cx="55" cy="12" r="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+            <text x="55" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--amber)">D10A</text>
+          </svg>
+          <div>
+            <p class="mode">nicks one strand</p>
+            <h4>Cas9 nickase</h4>
+            <p>Paired nicks on opposite strands give a staggered break with far lower off-target risk — worth the extra sgRNA when specificity decides the result.</p>
+          </div>
+        </div>
+
+        <div class="tool">
+          <!-- dCas9 blocking transcription -->
+          <svg viewBox="0 0 110 90" role="img" aria-label="dCas9 bound to DNA blocking RNA polymerase">
+            <g stroke="var(--line)" stroke-width="7" stroke-linecap="round">
+              <line x1="8" y1="40" x2="102" y2="40"/>
+              <line x1="8" y1="60" x2="102" y2="60"/>
+            </g>
+            <rect x="46" y="26" width="24" height="48" rx="9" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+            <!-- RNAP stalled -->
+            <path d="M20 16a10 10 0 0 1 16 0" fill="none" stroke="var(--amber)" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M28 20v8" stroke="var(--amber)" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M38 22h6" stroke="var(--amber)" stroke-width="2.4" stroke-linecap="round"/>
+            <text x="58" y="54" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--accent)">d</text>
+          </svg>
+          <div>
+            <p class="mode">binds, never cuts</p>
+            <h4>dCas9 / CRISPRi</h4>
+            <p>Knockdown instead of knockout. The only honest way to ask what an essential envelope gene does, and tunable enough to titrate the phenotype.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="three" style="margin-top:24px">
+        <div class="card">
+          <h4><span class="num">01</span>Allelic exchange</h4>
+          <p>In-frame, unmarked deletions by recombineering and counter-selection — still the cleanest genotype when the paper has to stand up.</p>
+        </div>
+        <div class="card">
+          <h4><span class="num">02</span>Transposon mutagenesis</h4>
+          <p>Unbiased forward screening when the candidate list is empty rather than too long.</p>
+        </div>
+        <div class="card">
+          <h4><span class="num">03</span>Complementation</h4>
+          <p>Every phenotype gets its gene put back. A mutant that is not complemented is a hypothesis, not a result.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="assay">
+    <div class="wrap">
+      <div class="two">
+        <div class="col">
+          <h2>How it is measured</h2>
+          <h3>Four read-outs, each answering a different objection</h3>
+          <p class="muted">A single infection experiment proves very little on its own. Each assay below exists to close off one alternative explanation for why a mutant looks resistant.</p>
+          <p class="muted">Run together on the same strain pair, they separate <em>the phage cannot bind</em> from <em>the phage binds but cannot replicate</em>, and from <em>the cell was already dying</em>.</p>
+        </div>
+
+        <figure style="margin:0">
+          <!-- One-step growth curve -->
+          <svg viewBox="0 0 440 280" role="img" aria-label="Schematic one-step growth curve showing latent period, rise period and burst size">
+            <g stroke="var(--line)" stroke-width="1">
+              <line x1="56" y1="40" x2="420" y2="40"/><line x1="56" y1="90" x2="420" y2="90"/>
+              <line x1="56" y1="140" x2="420" y2="140"/><line x1="56" y1="190" x2="420" y2="190"/>
+              <line x1="56" y1="240" x2="420" y2="240"/>
+            </g>
+            <g stroke="var(--ink-soft)" stroke-width="1.4">
+              <line x1="56" y1="40" x2="56" y2="240"/><line x1="56" y1="240" x2="420" y2="240"/>
+            </g>
+            <g font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-soft)" text-anchor="end">
+              <text x="48" y="44">10&#8311;</text><text x="48" y="94">10&#8310;</text>
+              <text x="48" y="144">10&#8309;</text><text x="48" y="194">10&#8308;</text><text x="48" y="244">10&#179;</text>
+            </g>
+            <g font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-soft)" text-anchor="middle">
+              <text x="56" y="258">0</text><text x="147" y="258">60</text><text x="238" y="258">120</text>
+              <text x="329" y="258">180</text><text x="420" y="258">240</text>
+            </g>
+            <text x="238" y="274" font-family="Archivo, sans-serif" font-size="11" fill="var(--ink-soft)" text-anchor="middle">minutes after infection</text>
+            <text x="16" y="140" font-family="Archivo, sans-serif" font-size="11" fill="var(--ink-soft)" text-anchor="middle" transform="rotate(-90 16 140)">PFU / ml</text>
+
+            <!-- latent period shading -->
+            <rect x="56" y="40" width="121" height="200" fill="var(--accent-soft)" opacity=".5"/>
+            <text x="116" y="60" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--accent)" text-anchor="middle">latent period</text>
+
+            <!-- mutant: flat, no burst -->
+            <path d="M56 212 L147 211 L238 209 L329 208 L420 207" fill="none" stroke="var(--amber)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <g fill="var(--amber)">
+              <circle cx="56" cy="212" r="4"/><circle cx="147" cy="211" r="4"/><circle cx="238" cy="209" r="4"/>
+              <circle cx="329" cy="208" r="4"/><circle cx="420" cy="207" r="4"/>
+            </g>
+            <!-- WT: latent then burst then plateau -->
+            <path d="M56 212 L147 210 L192 196 L238 124 L283 82 L329 70 L420 66" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <g fill="var(--accent)">
+              <circle cx="56" cy="212" r="4"/><circle cx="147" cy="210" r="4"/><circle cx="238" cy="124" r="4"/>
+              <circle cx="329" cy="70" r="4"/><circle cx="420" cy="66" r="4"/>
+            </g>
+            <!-- burst size bracket -->
+            <g stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="3 3">
+              <line x1="238" y1="124" x2="400" y2="124"/>
+            </g>
+            <g stroke="var(--ink-soft)" stroke-width="1.2">
+              <line x1="400" y1="70" x2="400" y2="124"/>
+              <line x1="396" y1="70" x2="404" y2="70"/><line x1="396" y1="124" x2="404" y2="124"/>
+            </g>
+            <text x="392" y="100" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--ink-soft)">burst size</text>
+
+            <text x="412" y="198" text-anchor="end" font-family="Archivo, sans-serif" font-size="11" font-weight="600" fill="var(--amber)">receptor mutant</text>
+            <text x="300" y="56" text-anchor="end" font-family="Archivo, sans-serif" font-size="11" font-weight="600" fill="var(--accent)">wild type</text>
+          </svg>
+          <figcaption><b>Figure 3.</b> One-step growth, drawn schematically. Latent period and burst size are the two numbers; a mutant that never bursts failed before replication began.</figcaption>
+        </figure>
+      </div>
+
+      <div class="three" style="margin-top:38px">
+        <div class="card">
+          <h4><span class="num">01</span>One-step growth curve</h4>
+          <p>Synchronised infection, then titre over a time course. Gives latent period and burst size — the difference between a phage that cannot get in and one that gets in but replicates badly.</p>
+        </div>
+        <div class="card">
+          <h4><span class="num">02</span>Killing assay</h4>
+          <p>Viable host counts after challenge at a fixed MOI. Measures the outcome that actually matters: whether the phage clears the population.</p>
+        </div>
+        <div class="card">
+          <h4><span class="num">03</span>Cell viability — alamarBlue</h4>
+          <p>Resazurin reduction as a metabolic read-out, in plate format. Catches the trivial explanation first: a mutant that looks resistant because it was already unhealthy.</p>
+        </div>
+        <div class="card">
+          <h4><span class="num">04</span>Confocal microscopy</h4>
+          <p>Fluorescent reporter phage on fluorescently labelled host, single cell by single cell. Resolves what a bulk titre averages away — which cells were entered, and which were only touched.</p>
+        </div>
+      </div>
+
+      <figure style="margin:36px 0 0">
+        <!-- Four-panel confocal schematic: DIC / GFP / mCherry / merge -->
+        <svg viewBox="0 0 880 250" role="img" aria-label="Schematic four-panel confocal read-out: DIC, GFP host channel, mCherry reporter phage channel, and merge">
+          <defs>
+            <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="3.2" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <!-- one cluster of rod-shaped cells, reused per channel -->
+            <g id="cells">
+              <g transform="translate(96,118)">
+                <rect x="-26" y="-5" width="52" height="10" rx="5" transform="rotate(14)"/>
+                <rect x="-24" y="-5" width="48" height="10" rx="5" transform="translate(6,14) rotate(-28)"/>
+                <rect x="-22" y="-4.5" width="44" height="9" rx="4.5" transform="translate(-10,16) rotate(48)"/>
+                <rect x="-25" y="-5" width="50" height="10" rx="5" transform="translate(4,-14) rotate(-8)"/>
+                <rect x="-20" y="-4.5" width="40" height="9" rx="4.5" transform="translate(16,4) rotate(66)"/>
+              </g>
+              <rect x="22" y="36" width="34" height="8" rx="4" transform="rotate(-24 39 40)"/>
+              <rect x="150" y="48" width="30" height="8" rx="4" transform="rotate(38 165 52)"/>
+              <rect x="34" y="176" width="32" height="8" rx="4" transform="rotate(16 50 180)"/>
+              <rect x="146" y="188" width="28" height="8" rx="4" transform="rotate(-42 160 192)"/>
+            </g>
+          </defs>
+
+          <!-- panel 1: DIC -->
+          <g>
+            <rect x="0" y="26" width="208" height="208" rx="4" fill="#8d9092"/>
+            <g fill="#b9bcbe" opacity=".9"><use href="#cells"/></g>
+            <text x="8" y="20" font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">DIC</text>
+          </g>
+          <!-- panel 2: GFP -->
+          <g>
+            <rect x="224" y="26" width="208" height="208" rx="4" fill="#06100a"/>
+            <g transform="translate(224,0)" fill="#3ee06a" filter="url(#glow)"><use href="#cells"/></g>
+            <text x="232" y="20" font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">GFP &#183; host</text>
+          </g>
+          <!-- panel 3: mCherry -->
+          <g>
+            <rect x="448" y="26" width="208" height="208" rx="4" fill="#120507"/>
+            <g transform="translate(448,0)" fill="#e8384f" filter="url(#glow)"><use href="#cells"/></g>
+            <text x="456" y="20" font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">mCherry &#183; phage</text>
+          </g>
+          <!-- panel 4: merge -->
+          <g>
+            <rect x="672" y="26" width="208" height="208" rx="4" fill="#0d0a06"/>
+            <g transform="translate(672,0)" fill="#f0a63c" filter="url(#glow)"><use href="#cells"/></g>
+            <text x="680" y="20" font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Merge</text>
+          </g>
+
+          <!-- scale bar -->
+          <g>
+            <rect x="836" y="218" width="34" height="4" rx="2" fill="#ffffff" opacity=".9"/>
+          </g>
+        </svg>
+        <figcaption><b>Figure 4.</b> Schematic of the confocal read-out. A reporter phage carrying <em>mCherry</em> is scored against a GFP-expressing host: overlap in the merge means the phage got in and expressed, not merely that it stuck to the outside.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <h2>At the bench</h2>
+      <div class="skillgrid">
+        <div>
+          <h4>Genome editing</h4>
+          <ul>
+            <li>Cas9 — double-strand cleavage</li>
+            <li>Cas9 nickase (D10A / H840A), paired guides</li>
+            <li>dCas9 / CRISPRi knockdown</li>
+            <li>sgRNA design, off-target screening</li>
+            <li>HDR donor design, knock-in</li>
+            <li>RNP and plasmid delivery</li>
+            <li>Edit validation by PCR and sequencing</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Bacterial genetics</h4>
+          <ul>
+            <li>In-frame deletion, allelic exchange</li>
+            <li>Transposon mutagenesis</li>
+            <li>Gibson assembly, ligation, cloning</li>
+            <li>Primer design; overlapping, touchdown, qPCR</li>
+            <li>Complementation and strain validation</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Phage work</h4>
+          <ul>
+            <li>Amplification and high-titre prep</li>
+            <li>Plaque assay, efficiency of plating</li>
+            <li>Adsorption kinetics, optimal MOI</li>
+            <li>One-step growth curves</li>
+            <li>Phage protein expression, FPLC purification</li>
+            <li>Viral genome modification</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Envelope &amp; physiology</h4>
+          <ul>
+            <li><em>M. smegmatis</em> culture, incl. mutant strains</li>
+            <li>Biofilm, hydrophobicity, auto-aggregation</li>
+            <li>Motility; Lewis acidity/basicity</li>
+            <li>MIC / MBC antibiotic susceptibility</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Imaging &amp; omics</h4>
+          <ul>
+            <li>SEM and TEM of cell surface</li>
+            <li>Confocal microscopy (SYTO 9, SYPRO Ruby)</li>
+            <li>Transcriptomics</li>
+            <li>Whole-genome sequencing analysis</li>
+            <li>GraphPad Prism</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Beyond the bench</h4>
+          <ul>
+            <li>Proposal writing, manuscript preparation</li>
+            <li>Mentoring interns and undergraduates</li>
+            <li>Teaching practical molecular biology</li>
+            <li>Clinical laboratory diagnostics (certified)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="papers">
+    <div class="wrap">
+      <h2>Published</h2>
+      <ol class="pubs">
+        <li>
+          Maharana J, Wang CH, Tsai LA, Liao YT, Yang CH, Shen MC, Macale LS, <span class="you">Tran TN</span>, Narsico J, Perez RJ, Tewary SK, Wu JL, Lin HY, Chang SW, Franklin A, Moynihan PJ, Jacobs-Sera D, Freeman KG, Hatfull GF, Lowary TL, Ho MC (2025). Cryo-EM and cryo-ET reveal the molecular architecture and host interactions of mycobacteriophage Douge. <span class="venue">Cell Reports</span> 44(8):116057. <a href="https://doi.org/10.1016/j.celrep.2025.116057">doi:10.1016/j.celrep.2025.116057</a>
+        </li>
+        <li>
+          Tsai PC*, <span class="you">Tran TN</span>*, Shih TH, Lee K, Wu CY, Huang SL (2025). Roles of <em>galU</em> in bacterial physiology and responses to surfactants and antibiotics in <em>Pseudomonas nitroreducens</em> TX1. <span class="venue">International Biodeterioration and Biodegradation</span>. <a href="https://doi.org/10.1016/j.ibiod.2025.106072">doi:10.1016/j.ibiod.2025.106072</a><br><span style="font-size:.85em">*equal contribution</span>
+        </li>
+        <li>
+          <span class="you">Tran TN</span>*, Truong TH, Pham NTL, Tong HT (2024). Antimicrobial activity of <em>Streptomyces</em> collected from Con Dao and Phu Quoc primitive forests. <span class="venue">VNUHCM Journal of Science and Technology Development</span>. <a href="https://doi.org/10.32508/stdj.v26i4.4047">doi:10.32508/stdj.v26i4.4047</a>
+        </li>
+      </ol>
+
+      <h2 style="margin-top:44px">Presented</h2>
+      <ul class="talks">
+        <li><span class="kind">Oral · Vietnam 2024</span><strong>Effects of <em>galU</em> and <em>wbpK</em> mutants in <em>P. nitroreducens</em> TX1 on growth and cell surface properties.</strong> 4th International Conference of Applied Sciences.</li>
+        <li><span class="kind">Poster · Taiwan 2023</span><strong><em>galU</em> mutation, outer membrane properties and biofilm formation in <em>P. nitroreducens</em> TX1.</strong> Taiwan Symposium of Microbiology — excellent presentation award.</li>
+        <li><span class="kind">Oral · Japan 2023</span><strong>Deficient lipopolysaccharide structure in <em>P. nitroreducens</em> TX1 grown in ethoxylated surfactants.</strong> Asian Symposium of Microbial Ecology.</li>
+        <li><span class="kind">Poster · Taiwan 2022</span><strong>PQQ-dependent alcohol dehydrogenase mutations in <em>P. nitroreducens</em> TX1 grown in alcohols or surfactants.</strong> Taiwan Symposium of Microbial Ecology.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="path">
+    <div class="wrap">
+      <h2>How I got here</h2>
+      <div class="two">
+        <div class="tl">
+          <div class="item">
+            <p class="when">Now</p>
+            <h4>PhD student · TIGP-CBMB</h4>
+            <p>Chemical Biology and Molecular Biophysics, Taiwan International Graduate Program, Academia Sinica — jointly with the Institute of Biochemical Sciences, National Taiwan University. Lab of <strong style="color:var(--ink);font-weight:600">Prof. Todd L. Lowary</strong>, Institute of Biological Chemistry: genetic tools for deleting glycopeptidolipid biosynthesis genes in mycobacteria, phage–host interaction and receptor identification.</p>
+          </div>
+          <div class="item">
+            <p class="when">2024 – 2025</p>
+            <h4>Research Assistant · Lowary lab, Academia Sinica</h4>
+            <p>The same lab, before starting the PhD in it. Phage amplification, protein expression and FPLC purification; adsorption, growth kinetics and MOI protocols on <em>M. smegmatis</em> wild type and <em>lamH</em> mutant hosts. Co-author on the mycobacteriophage Douge structure.</p>
+          </div>
+          <div class="item">
+            <p class="when">2022 – 2024</p>
+            <h4>MSc Microbiology and Immunology · NYCU</h4>
+            <p>Huang lab. Found genes essential for <em>P. nitroreducens</em> TX1 survival in surfactant, then tracked what their loss did to the cell surface — biofilm, hydrophobicity, antibiotic susceptibility, transcriptome, SEM and TEM. GPA 4.16/4.3.</p>
+          </div>
+          <div class="item">
+            <p class="when">2021</p>
+            <h4>Medical laboratory technician · Ho Chi Minh City</h4>
+            <p>Certified medical technologist. Haematology, serum biochemistry, hormone assays and infectious-disease serology on patient samples.</p>
+          </div>
+          <div class="item">
+            <p class="when">2015 – 2020</p>
+            <h4>BSc Biotechnology · International University, VNU-HCM</h4>
+            <p>Isolated <em>Streptomyces</em> from Phu Quoc and Con Dao forests and screened their metabolites for antimicrobial activity. Teaching assistant across four lab courses.</p>
+          </div>
+        </div>
+
+        <div>
+          <dl class="facts">
+            <div class="fact"><dt>Languages</dt><dd>Vietnamese (native) · English, professional (IELTS 8.0)</dd></div>
+            <div class="fact"><dt>Scholarships</dt><dd>Full-ride PhD scholarship, NYCU (2024–2027) · Full-ride MSc scholarship, NYCU (2022–2024)</dd></div>
+            <div class="fact"><dt>Award</dt><dd>Excellent oral presentation, Taiwan Symposium of Microbiology 2023</dd></div>
+            <div class="fact"><dt>Certificates</dt><dd>Antimicrobial Resistance (DTU) · Whole Genome Sequencing of Bacterial Genomes (DTU) · Bacteria and Chronic Infections (Copenhagen) · Medical Technologist (HCMC)</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="big">Happy to talk about phages.</span>
+    <span class="links">
+      <a href="mailto:tnthang97@gmail.com">tnthang97@gmail.com</a>
+      <a href="https://www.linkedin.com/in/tnt97/">LinkedIn</a>
+      <span class="muted">Taipei, Taiwan</span>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn=document.getElementById('theme'),root=document.documentElement;
+  function current(){
+    var s=root.getAttribute('data-theme');
+    if(s) return s;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  }
+  function label(){btn.textContent=current()==='dark'?'Light':'Dark';}
+  try{var sv=localStorage.getItem('tnt-theme');if(sv==='dark'||sv==='light')root.setAttribute('data-theme',sv);}catch(e){}
+  label();
+  btn.addEventListener('click',function(){
+    var n=current()==='dark'?'light':'dark';
+    root.setAttribute('data-theme',n);
+    try{localStorage.setItem('tnt-theme',n);}catch(e){}
+    label();
+  });
+})();
+</script>
+</body>
+</html>
